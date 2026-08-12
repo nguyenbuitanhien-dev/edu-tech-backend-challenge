@@ -4,18 +4,18 @@ Hệ thống Backend API cho Nền tảng Đào tạo Khóa học Online và Qu�
 
 ---
 
-## 1. Tech Stack (Công Nghệ Sử Dụng)
+## 🛠️ 1. Tech Stack (Công Nghệ Sử Dụng)
 
 - **Language & Runtime**: Node.js (v20+) + TypeScript.
 - **Web Framework**: Express.js (Layered & Modular Clean Architecture).
-- **Database & ORM**: PostgreSQL 16 (khởi chạy qua Docker Compose) kết hợp Prisma ORM.
+- **Database & ORM**: PostgreSQL 16 (khởi chạy qua Docker Compose hoặc Render Postgres) kết hợp Prisma ORM.
 - **Validation**: Zod (Type-safe Schema Validation).
 - **Date & Timezone**: `dayjs` (kết nối plugin `utc`, `timezone`, `customParseFormat`).
 - **Testing**: Jest + Supertest (Automated Unit & Integration Tests).
 
 ---
 
-## 2. Múi Giờ & Quy Tắc Kỳ Nghỉ (Timezone & Holiday Rules)
+## 🌏 2. Múi Giờ & Quy Tắc Kỳ Nghỉ (Timezone & Holiday Rules)
 
 1. **Múi Giờ Hệ Thống (Timezone)**:
    - **Thống nhất tuyệt đối**: `Asia/Ho_Chi_Minh` (GMT+7).
@@ -28,7 +28,32 @@ Hệ thống Backend API cho Nền tảng Đào tạo Khóa học Online và Qu�
 
 ---
 
-## ⚡ 3. Cách Chạy Dự Án Local (Local Setup)
+## 🚀 3. Hướng Dẫn Deploy Lên Render.com (Render Cloud Deployment)
+
+Dự án đã tích hợp sẵn Blueprint **[`render.yaml`](file:///d:/App/backend/render.yaml)** để Deploy tự động lên Cloud Render.com.
+
+### Quy trình Deploy lên Render.com (Tùy chọn - Điểm cộng):
+
+1. **Đăng nhập Render.com**: Truy cập [https://dashboard.render.com](https://dashboard.render.com).
+2. **Tạo Web Service Mới**: Bấm **New +** ➔ Chọn **Web Service**.
+3. **Kết nối GitHub Repository**: Chọn Repo [`nguyenbuitanhien-dev/edu-tech-backend-challenge`](https://github.com/nguyenbuitanhien-dev/edu-tech-backend-challenge.git).
+4. **Cấu hình thông số Deploy**:
+   - **Name**: `edu-tech-backend`
+   - **Runtime**: `Node`
+   - **Region**: `Singapore`
+   - **Branch**: `main`
+   - **Build Command**: `npm install && npx prisma generate && npx tsc`
+   - **Start Command**: `npm start`
+5. **Khai báo Environment Variables (Biến môi trường)**:
+   - `NODE_ENV`: `production`
+   - `TZ`: `Asia/Ho_Chi_Minh`
+   - `JWT_SECRET`: `super-secret-jwt-key-for-education-app-2026`
+   - `DATABASE_URL`: Chuỗi kết nối PostgreSQL (Ví dụ từ Render PostgreSQL / Supabase / Neon).
+6. **Bấm "Create Web Service"**: Render sẽ tự động Build TypeScript, sinh Prisma Client và Publish ứng dụng live công khai!
+
+---
+
+## ⚡ 4. Cách Chạy Dự Án Local (Local Setup)
 
 ### Bước 1: Cài đặt Dependencies
 ```bash
@@ -64,22 +89,22 @@ npm test
 
 ---
 
-## 4. Hướng Dẫn Chạy Postman Collection (`docs/postman_collection.json`)
+## 📮 5. Hướng Dẫn Chạy Postman Collection (`docs/postman_collection.json`)
 
-Toàn bộ các request kiểm thử từ **Bài 2, Bài 3 đến PHẦN C — MINI REST API** đã được lưu sẵn trong file **[`docs/postman_collection.json`](docs/postman_collection.json)**.
+Toàn bộ các request kiểm thử từ **Bài 2, Bài 3 đến PHẦN C — MINI REST API** đã được lưu sẵn trong file **[`docs/postman_collection.json`](file:///d:/App/backend/docs/postman_collection.json)**.
 
 ### Cách Import & Kiểm thử 1-Click trên Postman:
 1. Mở ứng dụng **Postman**.
-2. Chọn nút **Import** (ở góc trên cùng bên trái) ➔ Chọn file [`docs/postman_collection.json`](docs/postman_collection.json).
+2. Chọn nút **Import** (ở góc trên cùng bên trái) ➔ Chọn file [`docs/postman_collection.json`](file:///d:/App/backend/docs/postman_collection.json).
 3. Collection sẽ hiển thị đầy đủ 2 thư mục chính:
 
-#### 🔹 Thư mục `BÀI 2 & BÀI 3 (Algorithm APIs)`:
+#### 🔹 Thư mục `🔥 BÀI 2 & BÀI 3 (Algorithm APIs)`:
 - `Bài 2 - POST /schedule/generate (200 OK)`: Sinh 16 buổi học & ngày bế giảng.
 - `Bài 2 - POST /schedule/generate (Lỗi 400)`: Kiểm thử bắt lỗi thiếu `startDate`.
 - `Bài 3 - POST /invoice/calc (200 OK)`: Tính subtotal, discount SAVE10, refund & total.
 - `Bài 3 - POST /invoice/calc (Lỗi 400)`: Kiểm thử bắt lỗi `months = 5` (>3).
 
-#### 🔹 Thư mục `PHẦN C - MINI REST API`:
+#### 🔹 Thư mục `📚 PHẦN C - MINI REST API`:
 - `1. Auth - Đăng nhập Staff lấy Token`: `POST /api/auth/login` với email `staff@example.com` / pass `Password123!`.
 - `2. Auth - Đăng nhập Student lấy Token`: `POST /api/auth/login` với email `student@example.com` / pass `Password123!`.
 - `3. Education - Danh sách Khóa học`: `GET /api/courses`.
@@ -93,12 +118,13 @@ Toàn bộ các request kiểm thử từ **Bài 2, Bài 3 đến PHẦN C — M
 
 ---
 
-## 5. Mô Tả Kiến Trúc Thư Mục (Clean Architecture)
+## 📁 6. Mô Tả Kiến Trúc Thư Mục (Clean Architecture)
 
 Dự án áp dụng kiến trúc **Clean Architecture / Layered Architecture** phân tách lớp rõ ràng:
 
 ```text
 backend/
+├── render.yaml                           # Cấu hình Deploy tự động Blueprint trên Render.com
 ├── docs/                                 # THƯ MỤC TÀI LIỆU (PHẦN A - THIẾT KẾ)
 │   ├── ERD.md                            # Bản vẽ ERD (Mermaid) & Mô tả kiến trúc
 │   ├── API_LIST.md                       # Danh sách >12 Endpoints API RESTful
@@ -116,17 +142,7 @@ backend/
 │   │
 │   ├── modules/                          # CÁC MODULE NGHIỆP VỤ (FEATURE MODULES)
 │   │   ├── education/                    # Module BÀI 2: Schedule Generator, Courses, Classes
-│   │   │   ├── schedule.service.ts       # Service Business logic Bài 2
-│   │   │   ├── education.schema.ts       # Zod Schema Validators Bài 2
-│   │   │   ├── education.controller.ts   # Controller HTTP Handler
-│   │   │   └── education.routes.ts       # Routes Router Express
-│   │   │
 │   │   ├── enrollment/                   # Module BÀI 3: Invoice Calculator, Payments
-│   │   │   ├── invoice-calculator.service.ts # Service Business logic Bài 3
-│   │   │   ├── enrollment.schema.ts      # Zod Schema Validators Bài 3
-│   │   │   ├── enrollment.controller.ts  # Controller HTTP Handler
-│   │   │   └── enrollment.routes.ts      # Routes Router Express
-│   │   │
 │   │   ├── auth/                         # Module Đăng ký / Đăng nhập JWT
 │   │   └── service-request/              # Module Dịch vụ Công nghệ & Log Audit
 │   │
@@ -142,9 +158,9 @@ backend/
 
 ---
 
-## 6. Ví Dụ cURL Cho 2 Endpoints Chính
+## 💻 7. Ví Dụ cURL Cho 2 Endpoints Chính
 
-### 6.1 Ví dụ cURL Bài 2: Sinh Lịch Học & Ngày Bế Giảng (`POST /schedule/generate`)
+### 7.1 Ví dụ cURL Bài 2: Sinh Lịch Học & Ngày Bế Giảng (`POST /schedule/generate`)
 
 ```bash
 curl -X POST http://localhost:3000/schedule/generate \
@@ -158,34 +174,9 @@ curl -X POST http://localhost:3000/schedule/generate \
   }'
 ```
 
-**Response Output `200 OK`**:
-```json
-{
-  "endDate": "2026-03-10",
-  "fullSchedule": [
-    "2026-01-01",
-    "2026-01-06",
-    "2026-01-08",
-    "2026-01-13",
-    "2026-01-15",
-    "2026-01-20",
-    "2026-01-22",
-    "2026-02-10",
-    "2026-02-12",
-    "2026-02-17",
-    "2026-02-19",
-    "2026-02-24",
-    "2026-02-26",
-    "2026-03-03",
-    "2026-03-05",
-    "2026-03-10"
-  ]
-}
-```
-
 ---
 
-### 6.2 Ví dụ cURL Bài 3: Tính Học Phí & Hóa Đơn (`POST /invoice/calc`)
+### 7.2 Ví dụ cURL Bài 3: Tính Học Phí & Hóa Đơn (`POST /invoice/calc`)
 
 ```bash
 curl -X POST http://localhost:3000/invoice/calc \
@@ -198,14 +189,4 @@ curl -X POST http://localhost:3000/invoice/calc \
     "canceledClasses": 1,
     "refundPerClass": 40000
   }'
-```
-
-**Response Output `200 OK`**:
-```json
-{
-  "subtotal": 3000000,
-  "discount": 300000,
-  "refund": 40000,
-  "total": 2660000
-}
 ```
